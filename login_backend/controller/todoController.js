@@ -7,7 +7,7 @@ async function createTodo(req, res) {
     await newTodo.save();
     res.status(201).json(newTodo);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -26,7 +26,7 @@ async function updateTodo(req, res) {
     const updatedTodo = await Todo.findByIdAndUpdate(id, req.body, {new: true,});
     res.status(200).json(updatedTodo);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -36,7 +36,7 @@ async function deleteTodo(req, res) {
     const deletedTodo = await Todo.findByIdAndRemove(id);
     res.status(200).json(deletedTodo);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 

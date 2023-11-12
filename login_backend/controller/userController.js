@@ -46,7 +46,7 @@ async function createUser(req, res) {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      res.status(400).json({ message: "User already registered" });
+      res.status(500).json({ message: "User already registered" });
     } else {
       const user = new User(req.body);
       await user.save();
@@ -55,7 +55,7 @@ async function createUser(req, res) {
         .json({ message: "Successfully registered, please login now." });
     }
   } catch (error) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -76,7 +76,7 @@ async function updateUser(req, res) {
     });
     res.status(200).json(updatedUser);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -86,7 +86,7 @@ async function deleteUser(req, res) {
     const deleteUser = await User.findByIdAndRemove(id);
     res.status(200).json(deleteUser);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 

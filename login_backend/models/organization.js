@@ -4,6 +4,10 @@ const organizationSchema = mongoose.Schema({
       type: String,
       required: true,
     },
+    teams: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Team',
+    }],
     active: {
         type: Boolean,
         default: true,
