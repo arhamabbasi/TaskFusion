@@ -1,5 +1,6 @@
 const express = require('express');
 require('./util/db');
+const cors = require('cors');
 const bodyparser = require('body-parser');
 
 const userRouter = require('./routes/userRoute');
@@ -10,6 +11,8 @@ const taskRouter = require('./routes/taskRoute');
 const sprintRouter = require('./routes/sprintRoute');
 
 const app = express();
+app.use(cors());
+
 const PORT = 3005;
 app.use(bodyparser.json());
 app.use('/api',userRouter);

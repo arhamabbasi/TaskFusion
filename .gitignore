@@ -1,5 +1,7 @@
 # Ignore node_modules directory
-login_backend/node_modules/
-login_backend/package-lock.json
+login_backend/backend/node_modules/
+login_backend/backend/package-lock.json
+login_backend/client/package
+login_backend/client/package-lock.json
 
 

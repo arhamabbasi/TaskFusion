@@ -68,6 +68,16 @@ async function getAllUsers(req, res) {
   }
 }
 
+async function getUser(req, res) {
+  try {
+    const id = req.params.id
+    const user = await User.findById(id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 async function updateUser(req, res) {
   try {
     const { id } = req.params;
@@ -97,4 +107,5 @@ module.exports = {
   deleteUser,
   getAllUsers,
   dashboard,
+  getUser,
 };
