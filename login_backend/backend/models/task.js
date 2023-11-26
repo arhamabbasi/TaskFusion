@@ -7,7 +7,6 @@ const taskSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['complete', 'pending'],
     required: true,
   },
 //   sprintId: {

@@ -50,6 +50,11 @@ async function addTaskToSprint(req, res) {
     if (!sprint || !task) {
       return res.status(404).json({ message: "Sprint or Task not found" });
     }
+    const isDuplicate = sprint.tasks.includes(task._id);
+
+    if (isDuplicate) {
+      return res.status(400).json({ message: "Task is already in the Sprint" });
+    }
     sprint.tasks.push(task._id);
     await sprint.save();
 

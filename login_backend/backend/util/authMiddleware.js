@@ -17,7 +17,6 @@ function validateToken(req,res,next){
 function requireRoles(roles) {
     return (req, res, next) => {
     const userRole = req.body.role;
-    console.log(userRole);
     if (roles.includes(userRole)) {    
     next();
     } else {    
