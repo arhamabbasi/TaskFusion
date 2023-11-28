@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const teamSchema = mongoose.Schema({
     teamName: String,
-    teamMembers: [String],
+    teamMembers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    }],
     sprints: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sprint',

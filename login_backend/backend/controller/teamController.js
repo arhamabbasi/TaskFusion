@@ -4,19 +4,24 @@ const Sprint = require('../models/sprint');
 
 async function createTeam(req, res) {
   const { teamName, teamMembers } = req.body;
-  const teamMemberArray = teamMembers.split(" ");
   try {
-    for (const element of teamMemberArray) {
+    for (const element of teamMembers) {
       const user = await User.findOne({ email: element });
       const teamExist = await Team.findOne({ teamName: teamName });
       if (user) {
-        if (teamExist) {
+        if (teamExist && !teamExist.teamMembers.includes(user._id)) {
           teamExist.teamMembers.push(user._id);
           await teamExist.save();
           res
             .status(201)
             .json({ message: `Members successfully added in ${teamName}` });
-        } else {
+        }
+        else if(teamExist && teamExist.teamMembers.includes(user._id)){
+          res
+            .status(201)
+            .json({ message: `Members already added in ${teamName}` });
+        }
+         else{
           const team = new Team({ teamName, active: true });
           team.teamMembers.push(user._id);
           await team.save();
@@ -38,16 +43,28 @@ async function getTeam(req, res) {
 
   try {
     // const team = await Team.findOne({ teamName });
-    const team = await Team.find().populate({
-      path: "sprints",
-    });
-    if (team) {
+    const team = await Team.find().populate([
+      {
+        path: "teamMembers",
+        select: "name email",
+      },
+      {
+        path: "sprints",
+        select: "name",
+      }
+    ]);
       res.status(200).json({ team });
-    } else {
-      res.status(404).json({ message: `Team '${teamName}' not found` });
-    }
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+}
+async function deleteTeam(req,res){
+  try {
+    const id  = req.params.id;
+    const deleteTeam = await Team.findByIdAndRemove(id);
+    res.status(200).json(deleteTeam);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -75,4 +92,5 @@ module.exports = {
   createTeam,
   getTeam,
   assignSprintToTeam,
+  deleteTeam,
 };

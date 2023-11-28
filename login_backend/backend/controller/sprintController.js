@@ -23,6 +23,21 @@ async function getSprint(req, res) {
   }
 }
 
+
+async function getSprintBYId(req, res) {
+  try {
+    const id = req.params.id;
+    const sprint = await Sprint.findById(id).populate({
+      path: "tasks",
+      select: "description status",
+    });
+
+    res.status(201).json(sprint);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function deleteSprint(req, res) {
   try {
     const { sprintId } = req.params;
@@ -69,4 +84,5 @@ module.exports = {
   addTaskToSprint,
   getSprint,
   createSprint,
+  getSprintBYId,
 };
