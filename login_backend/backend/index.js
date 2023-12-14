@@ -16,6 +16,7 @@ app.use(cors());
 
 const PORT = 3005;
 app.use(bodyparser.json());
+//calling apis
 app.use("/api", userRouter);
 app.use("/api", teamRouter);
 app.use("/api", todoRouter);

@@ -1,4 +1,5 @@
 const Organization = require('../models/organization');
+//create a new organization by getting name
 async function createOrg(req,res){
     const {name} = req.body;
     try{
@@ -17,6 +18,7 @@ async function createOrg(req,res){
         res.status(500).json({error:err.message});
     }
 }
+// delete the existing organization by using its id
 async function deleteOrg(req,res){
     try {
         const { id } = req.params;

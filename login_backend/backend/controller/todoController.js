@@ -1,5 +1,5 @@
 const Todo = require("../models/todo");
-
+//create a new todo list 
 async function createTodo(req, res) {
   const { task } = req.body;
   try {
@@ -10,7 +10,7 @@ async function createTodo(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
-
+//get a list of all the todos
 async function getTodos(req, res) {
   try {
     const todos = await Todo.find();
@@ -19,7 +19,7 @@ async function getTodos(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
-
+//update the todo by using its id
 async function updateTodo(req, res) {
   const { id } = req.params;
   try {
@@ -29,7 +29,7 @@ async function updateTodo(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
-
+//delete the specific todo by using its id
 async function deleteTodo(req, res) {
   const { id } = req.params;
   try {

@@ -1,29 +1,32 @@
 const Sprint = require("../models/sprint");
 const Task = require("../models/task");
+const exception =require('./exceptionController');
 
+//create a new Sprint
 async function createSprint(req, res) {
   try {
     const newSprint = await Sprint.create(req.body);
     res.status(201).json(newSprint);
   } catch (error) {
+    exception.handleException(res,error,"createSprint");
     res.status(500).json({ error: error.message });
   }
 }
-
+// get the list of all sprints
 async function getSprint(req, res) {
   try {
     const sprints = await Sprint.find().populate({
       path: "tasks",
       select: "description status",
     });
-
     res.status(201).json(sprints);
   } catch (error) {
+    exception.handleException(res,error,"getSprint");
     res.status(500).json({ error: error.message });
   }
 }
 
-
+//get specific sprint by using specific id 
 async function getSprintBYId(req, res) {
   try {
     const id = req.params.id;
@@ -34,10 +37,11 @@ async function getSprintBYId(req, res) {
 
     res.status(201).json(sprint);
   } catch (error) {
+    exception.handleException(res,error,"getSprintById");
     res.status(500).json({ error: error.message });
   }
 }
-
+//delete the existing sprint by using its id
 async function deleteSprint(req, res) {
   try {
     const { sprintId } = req.params;
@@ -51,10 +55,11 @@ async function deleteSprint(req, res) {
     }
     res.json({ message: "Sprint deleted successfully" });
   } catch (error) {
+    exception.handleException(res,error,"deleteSprint");
     res.status(500).json({ error: error.message });
   }
 }
-
+//add speific task to specific sprint by using the id of task and sprint
 async function addTaskToSprint(req, res) {
   try {
     const { sprintId, taskId } = req.params;
@@ -75,6 +80,7 @@ async function addTaskToSprint(req, res) {
 
     res.json({ message: "Task added to Sprint successfully" });
   } catch (error) {
+    exception.handleException(res,error,"addTaskToSprint");
     res.status(500).json({ error: error.message });
   }
 }

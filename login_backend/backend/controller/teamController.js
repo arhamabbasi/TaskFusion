@@ -1,7 +1,9 @@
 const Team = require('../models/team');
 const User = require('../models/user');
 const Sprint = require('../models/sprint');
+const exception =require('./exceptionController');
 
+//cretae Team using teamName and teamMembers' emails
 async function createTeam(req, res) {
   const { teamName, teamMembers } = req.body;
   try {
@@ -34,10 +36,11 @@ async function createTeam(req, res) {
       }
     }
   } catch (error) {
+    exception.handleException(res,error,"createTeam");
     res.status(500).json({ error: error });
   }
 }
-
+// get the list of all teams
 async function getTeam(req, res) {
   // const { teamName } = req.body;
 
@@ -55,19 +58,22 @@ async function getTeam(req, res) {
     ]);
       res.status(200).json({ team });
   } catch (error) {
+    exception.handleException(res,error,"getTeam");
     res.status(500).json({ error: error.message });
   }
 }
+//delete team using specific id
 async function deleteTeam(req,res){
   try {
     const id  = req.params.id;
     const deleteTeam = await Team.findByIdAndRemove(id);
     res.status(200).json(deleteTeam);
   } catch (err) {
+    exception.handleException(res,err,"deleteTeam");
     res.status(500).json({ error: err.message });
   }
 }
-
+//assign specific sprint to specific Team using their ids
 async function assignSprintToTeam(req, res){
   try {
     const { teamId, sprintId } = req.params;
@@ -84,6 +90,7 @@ async function assignSprintToTeam(req, res){
     await team.save();
     res.json({ message: 'Sprint assigned to team successfully', team });
   } catch (error) {
+    exception.handleException(res,error,"assignSprintToTeam");
     res.status(500).json({ error: error.message });
   }
 }
