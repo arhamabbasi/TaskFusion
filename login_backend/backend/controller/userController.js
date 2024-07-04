@@ -14,7 +14,7 @@ async function loginUser(req, res) {
     if (user) {
       if (password == user.password) {
         var token = generateToken(user);
-        console.log('token of user',token);
+        // console.log('token of user',token);
         return res.status(200).json({
           message: "Login Successful",
           email: email,
@@ -38,7 +38,7 @@ function generateToken(User) {
     role: User.role,
     id: User._id,
   };
-  const token = jwt.sign(payload, "Mianwali");
+  const token = jwt.sign(payload, "Hamid");
   return token;
 }
 //it check if the user already exst if does not exist then create a new user

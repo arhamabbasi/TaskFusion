@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken');
 function validateToken(req,res,next){
     var token = req.headers.authorization;
     token = token.split(' ')[1];
-    console.log('hhehehe',token);
     if(!token){
         return res.status(401).json({message: 'no token provided'});
     }
-    jwt.verify(token,'Mianwali',(err,decoded) => {
+    jwt.verify(token,'Hamid',(err,decoded) => {
         if(err){
             return res.status(403).json({message: 'failed to authenticate token'});
         }
